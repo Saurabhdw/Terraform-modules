@@ -4,7 +4,7 @@ variable "location" {
   default     = ""
 }
 
-variable "resource_group_name" {
+variable "lb_resource_group_name" {
   description = "(Required) The name of the resource group where the load balancer resources will be imported."
   type        = string
 }
