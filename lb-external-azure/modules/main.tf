@@ -1,6 +1,6 @@
 # Azure load balancer module
 data "azurerm_resource_group" "azlb" {
-  name = var.lb_resource_group_name
+  name = var.resource_group_name
 }
 
 locals {
