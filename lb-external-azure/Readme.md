@@ -38,18 +38,9 @@ characteristics:
 Public loadbalancer example:
 
 ```hcl
-provider "azurerm" {
-  features {}
-}
-
-resource "azurerm_resource_group" "example" {
-  name     = "example-lb"
-  location = "West Europe"
-}
-
 module "mylb" {
-  source              = "Azure/loadbalancer/azurerm"
-  resource_group_name = azurerm_resource_group.example.name
+  source              = "github.com/Saurabhdw/Terraform-modules/lb-external-azure/modules"
+  resource_group_name = <rg_name>
   name                = "lb-terraform-test"
   pip_name            = "pip-terraform-test"
 
@@ -69,33 +60,6 @@ module "mylb" {
 }
 
 ```
-
-## Usage in Terraform 0.12
-
-Public loadbalancer example:
-
-```hcl
-module "mylb" {
-  source              = "github.com/Saurabhdw/Terraform-modules/lb-external-azure/modules"
-  resource_group_name = <rg_name>
-  prefix              = "terraform-test"
-
-  remote_port = {
-    ssh = ["Tcp", "22"]
-  }
-
-  lb_port = {
-    http = ["80", "Tcp", "80"]
-  }
-
-  lb_probe = {
-    http = ["Tcp", "80", ""]
-  }
-
-}
-
-```
-
 Private loadbalancer example:
 
 ```hcl
@@ -143,5 +107,51 @@ module "network" {
   }
 }
 ```
+### outputs.tf
 
+```hcl
+output "resource_group_tags" {
+  description = "the tags provided for the resource group"
+  value       = module.lb_external.azurerm_resource_group_tags
+}
+
+output "resource_group_name" {
+  description = "name of the resource group provisioned"
+  value       = module.lb_external.azurerm_resource_group_name
+}
+output "lb_id" {
+  description = "the id for the azurerm_lb resource"
+  value       = module.lb_external.azurerm_lb_id
+}
+
+output "lb_frontend_ip_configuration" {
+  description = "the frontend_ip_configuration for the azurerm_lb resource"
+  value       = module.lb_external.azurerm_lb_frontend_ip_configuration
+}
+
+output "lb_probe_ids" {
+  description = "the ids for the azurerm_lb_probe resources"
+  value       = module.lb_external.azurerm_lb_probe_ids
+}
+
+output "lb_nat_rule_ids" {
+  description = "the ids for the azurerm_lb_nat_rule resources"
+  value       = module.lb_external.azurerm_lb_nat_rule_ids
+}
+
+output "public_ip_id" {
+  description = "the id for the azurerm_lb_public_ip resource"
+  value       = module.lb_external.azurerm_public_ip_id
+}
+
+output "public_ip_address" {
+  description = "the ip address for the azurerm_lb_public_ip resource"
+  value       = module.lb_external.azurerm_public_ip_address
+}
+
+output "lb_backend_address_pool_id" {
+  description = "the id for the azurerm_lb_backend_address_pool resource"
+  value       = module.lb_external.azurerm_lb_backend_address_pool_id
+}
+```
 
