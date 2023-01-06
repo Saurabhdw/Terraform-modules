@@ -3,3 +3,7 @@ LoadBalancer-External
 LoadBalancer-Internal
 test
 lb-internal-azure
+vnet
+vnet copy 2
+vnet copy 3
+vnet copy 4
